@@ -1,15 +1,17 @@
 import time
-
 from selenium import webdriver
 import unittest
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.chrome.options import Options
 
 
-class CardPayment(unittest.TestCase):
+class Purchase(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.get("https://www.got-it.io/solutions/excel-chat")
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_id("test-login-button").click()
@@ -29,14 +31,13 @@ class CardPayment(unittest.TestCase):
             EC.visibility_of_element_located((By.XPATH, "//div[@class='braintree-option braintree-option__card']")))
         card_option.click()
 
-        self.card_form = self.driver.find_element_by_xpath("//div[@class='braintree-card braintree-form "
-                                                           "braintree-sheet']")
+        self.card_form = self.driver.find_element_by_xpath(
+            "//div[@class='braintree-card braintree-form braintree-sheet']")
         self.card_num_frame = self.driver.find_element_by_xpath("//iframe[@id='braintree-hosted-field-number']")
         self.exp_date_frame = self.driver.find_element_by_xpath("//iframe[@id='braintree-hosted-field-expirationDate']")
         self.cvv_frame = self.driver.find_element_by_xpath("//iframe[@id='braintree-hosted-field-cvv']")
         self.postal_frame = self.driver.find_element_by_xpath("//iframe[@id='braintree-hosted-field-postalCode']")
         self.pay_btn = self.driver.find_element_by_xpath("//button[@class='gi-Button gi-Button--primary u-width-100']")
-        self.error_message_list = self.driver.find_elements_by_class_name("braintree-form__field-error")
 
     def fill_card_number(self, card_number):
         self.driver.switch_to.frame(self.card_num_frame)
@@ -58,46 +59,24 @@ class CardPayment(unittest.TestCase):
         self.driver.find_element_by_id("postal-code").send_keys(card_postal)
         self.driver.switch_to.default_content()
 
-    def test_card_payment_form_is_displayed(self):
-        assert self.card_form.is_displayed()
+    def test_fail_transaction(self):
+        self.fill_card_number("4000111111111115")
+        self.fill_card_date("0522")
+        self.fill_card_cvv("200")
+        self.fill_card_postal("19123")
+        self.pay_btn.click()
+        failure_message = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='braintree-sheet__error-text']")))
+        assert failure_message.is_displayed()
 
-    def test_pay_btn_is_displayed(self):
-        assert self.pay_btn.is_displayed()
-
-    def test_valid_card(self):
+    def test_success_transaction(self):
         self.fill_card_number("4009348888881881")
         self.fill_card_date("0522")
         self.fill_card_cvv("123")
         self.fill_card_postal("19123")
-        # If all error fields are not displayed then the card was valid
-        valid = True
-        for message in self.error_message_list:
-            valid = valid and (not message.is_displayed())
-        assert valid
-
-    def test_incomplete_card_number(self):
-        self.fill_card_number("400934888888188")
-        self.fill_card_date("0522")
-        assert self.error_message_list[0].is_displayed()
-
-    def test_incomplete_card_date(self):
-        self.fill_card_date("5")
-        self.fill_card_number("4009348888881881")
-        assert self.error_message_list[1].is_displayed()
-
-    def test_incomplete_card_cvv(self):
-        self.fill_card_cvv("12")
-        self.fill_card_date("0522")
-        assert self.error_message_list[2].is_displayed()
-
-    def test_incomplete_card_postal(self):
-        self.fill_card_postal("")
-        self.fill_card_cvv("123")
-        assert self.error_message_list[3].is_displayed()
-
-    def tearDown(self):
-        self.driver.delete_all_cookies()
-        self.driver.quit()
+        self.pay_btn.click()
+        time.sleep(10)
+        session_balance = self.driver.find_element_by_xpath("//strong[@class='u-marginLeft-1 u-marginRight-2']")
+        assert session_balance.text == "unlimited"
 
 
 if __name__ == '__main__':

@@ -2,11 +2,14 @@ import time
 
 from selenium import webdriver
 import unittest
+from selenium.webdriver.chrome.options import Options
 
 
 class PricingPage(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.get("https://www.got-it.io/solutions/excel-chat")
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_id("test-login-button").click()

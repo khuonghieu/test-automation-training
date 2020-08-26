@@ -4,14 +4,15 @@ from selenium import webdriver
 import unittest
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-
-
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.chrome.options import Options
 
 
 class PaymentModal(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.get("https://www.got-it.io/solutions/excel-chat")
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_id("test-login-button").click()
