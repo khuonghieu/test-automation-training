@@ -18,7 +18,7 @@ class Purchase(unittest.TestCase):
         self.driver.find_element_by_xpath("//input[@placeholder='Email']").send_keys("khuongletrunghieu1@gmail.com")
         self.driver.find_element_by_xpath("//input[@placeholder='Password']").send_keys("Abc123!")
         self.driver.find_element_by_xpath("//button[@id='login-button']").click()
-        time.sleep(1)
+        time.sleep(2)
         self.driver.find_element_by_xpath("//a[@id='pricing-navlink-landing']").click()
         self.driver.find_element_by_xpath("//button[contains(text(),'TRY FOR FREE')]").click()
         self.payment_modal = self.driver.find_element_by_xpath("//div[@class='modal-content']")

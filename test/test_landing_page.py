@@ -15,7 +15,6 @@ class LandingPage(unittest.TestCase):
         login_btn = self.driver.find_element_by_id("test-login-button")
         assert login_btn.is_displayed()
 
-
     def test_login_modal_is_displayed(self):
         login_btn = self.driver.find_element_by_id("test-login-button")
         login_btn.click()
