@@ -2,6 +2,9 @@ import time
 
 from selenium import webdriver
 import unittest
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class CardPayment(unittest.TestCase):
@@ -13,13 +16,19 @@ class CardPayment(unittest.TestCase):
         self.driver.find_element_by_xpath("//input[@placeholder='Email']").send_keys("khuongletrunghieu1@gmail.com")
         self.driver.find_element_by_xpath("//input[@placeholder='Password']").send_keys("Abc123!")
         self.driver.find_element_by_xpath("//button[@id='login-button']").click()
-        time.sleep(2)
+        time.sleep(1)
         self.driver.find_element_by_xpath("//a[@id='pricing-navlink-landing']").click()
         self.driver.find_element_by_xpath("//button[contains(text(),'TRY FOR FREE')]").click()
         self.payment_modal = self.driver.find_element_by_xpath("//div[@class='modal-content']")
-        time.sleep(7)
-        self.driver.find_element_by_xpath("//div[@class='braintree-option braintree-option__card']").click()
-        time.sleep(1)
+
+        choose_another_method_btn = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, "//span[contains(text(),'Choose another way to pay')]")))
+        if choose_another_method_btn.is_displayed():
+            choose_another_method_btn.click()
+        card_option = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, "//div[@class='braintree-option braintree-option__card']")))
+        card_option.click()
+
         self.card_form = self.driver.find_element_by_xpath("//div[@class='braintree-card braintree-form "
                                                            "braintree-sheet']")
         self.card_num_frame = self.driver.find_element_by_xpath("//iframe[@id='braintree-hosted-field-number']")
@@ -27,6 +36,7 @@ class CardPayment(unittest.TestCase):
         self.cvv_frame = self.driver.find_element_by_xpath("//iframe[@id='braintree-hosted-field-cvv']")
         self.postal_frame = self.driver.find_element_by_xpath("//iframe[@id='braintree-hosted-field-postalCode']")
         self.pay_btn = self.driver.find_element_by_xpath("//button[@class='gi-Button gi-Button--primary u-width-100']")
+        self.error_message_list = self.driver.find_elements_by_class_name("braintree-form__field-error")
 
     def fill_card_number(self, card_number):
         self.driver.switch_to.frame(self.card_num_frame)
@@ -59,35 +69,31 @@ class CardPayment(unittest.TestCase):
         self.fill_card_date("0522")
         self.fill_card_cvv("123")
         self.fill_card_postal("19123")
-        error_message_list = self.driver.find_elements_by_class_name("braintree-form__field-error")
+        # If all error fields are not displayed then the card was valid
         valid = True
-        for message in error_message_list:
+        for message in self.error_message_list:
             valid = valid and (not message.is_displayed())
         assert valid
 
     def test_incomplete_card_number(self):
         self.fill_card_number("400934888888188")
         self.fill_card_date("0522")
-        error_message_list = self.driver.find_elements_by_class_name("braintree-form__field-error")
-        assert error_message_list[0].is_displayed()
+        assert self.error_message_list[0].is_displayed()
 
     def test_incomplete_card_date(self):
         self.fill_card_date("5")
         self.fill_card_number("4009348888881881")
-        error_message_list = self.driver.find_elements_by_class_name("braintree-form__field-error")
-        assert error_message_list[1].is_displayed()
+        assert self.error_message_list[1].is_displayed()
 
     def test_incomplete_card_cvv(self):
         self.fill_card_cvv("12")
         self.fill_card_date("0522")
-        error_message_list = self.driver.find_elements_by_class_name("braintree-form__field-error")
-        assert error_message_list[2].is_displayed()
+        assert self.error_message_list[2].is_displayed()
 
     def test_incomplete_card_postal(self):
         self.fill_card_postal("")
         self.fill_card_cvv("123")
-        error_message_list = self.driver.find_elements_by_class_name("braintree-form__field-error")
-        assert error_message_list[3].is_displayed()
+        assert self.error_message_list[3].is_displayed()
 
     def tearDown(self):
         self.driver.delete_all_cookies()
