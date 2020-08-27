@@ -23,3 +23,5 @@ For example:
 ```
 python3 -m unittest test/TestLandingPage.py --verbose
 ```
+  
+  Note: the account ID currently being used for testing is 17536. Please terminate its subscription before running the test suite.
