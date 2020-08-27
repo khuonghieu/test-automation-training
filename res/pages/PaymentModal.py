@@ -12,5 +12,7 @@ class PaymentModal(PricingPage):
         try:
             if self.is_enabled(Locators.CHOOSE_ANOTHER_METHOD):
                 self.click(Locators.CHOOSE_ANOTHER_METHOD)
+            else:
+                pass
         except TimeoutException:
             pass
