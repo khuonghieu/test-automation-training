@@ -1,4 +1,4 @@
-#How to run all the test:
+# How to run all the test:
 
 - Clone the project: 
 ```
