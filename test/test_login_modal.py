@@ -8,7 +8,7 @@ from res.testdata import TestData
 class TestLoginModal(unittest.TestCase):
     def setUp(self):
         chrome_options = Options()
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=chrome_options)
         self.login_modal = LoginModal(self.driver)
 

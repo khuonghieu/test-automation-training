@@ -10,7 +10,7 @@ from res.locators import Locators
 class TestPurchase(unittest.TestCase):
     def setUp(self):
         chrome_options = Options()
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=chrome_options)
         self.purchase = CardPayment(self.driver)
 

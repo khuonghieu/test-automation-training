@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class Locators:
-    LOGIN_MODAL_BTN = (By.ID, "tests-login-button")
+    LOGIN_MODAL_BTN = (By.ID, "test-login-button")
     LOGIN_MODAL = (By.XPATH, "//div[@class='modal-dialog']//div[@class='modal-content']")
 
     EMAIL_INPUT = (By.XPATH, "//input[@placeholder='Email']")
@@ -12,7 +12,7 @@ class Locators:
     PRICING_BTN = (By.XPATH, "//a[@id='pricing-navlink-landing']")
     NAVBAR_ACCOUNT = (By.CLASS_NAME, "gi-navBar-Account")
     INDIVIDUAL_SMALL_BUSINESS_BTN = (
-        By.XPATH, "//button[@class='gi-coverPricing-Tab-Item is-active tests-invididuals-tab']")
+        By.XPATH, "//button[@class='gi-coverPricing-Tab-Item is-active test-invididuals-tab']")
     LOGIN_ERROR_MESSAGE = (By.XPATH, "//div[@class='alert alert-danger']")
     SUBSCRIPTION_BTN = (By.XPATH, "//button[contains(text(),'TRY FOR FREE')]")
 

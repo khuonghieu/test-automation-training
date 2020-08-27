@@ -7,6 +7,7 @@ from res.pages.LandingPage import LandingPage
 class TestLandingPage(unittest.TestCase):
     def setUp(self):
         chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=chrome_options)
         self.landing_page = LandingPage(self.driver)
 
