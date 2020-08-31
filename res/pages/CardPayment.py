@@ -2,6 +2,7 @@ import time
 
 from res.pages.PaymentModal import PaymentModal
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
 
 
 class CardPayment(PaymentModal):
@@ -41,7 +42,10 @@ class CardPayment(PaymentModal):
 
     def __init__(self, driver):
         super().__init__(driver)
-        super().show_all_payment_methods()
+        try:
+            super().show_all_payment_methods()
+        except TimeoutException:
+            pass
         time.sleep(1)
         self.click(self.CARD_OPTION)
 

@@ -8,8 +8,8 @@ from res.pages.CardPayment import CardPayment
 class TestCardPayment(unittest.TestCase):
     def setUp(self):
         chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        self.driver = webdriver.Chrome(executable_path="../../test-automation-training/drivers/chromedriver",
+        #chrome_options.add_argument("--headless")
+        self.driver = webdriver.Chrome(executable_path='../drivers/chromedriver',
                                        options=chrome_options)
         self.card_payment = CardPayment(self.driver)
 
