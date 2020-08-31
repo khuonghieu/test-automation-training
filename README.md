@@ -14,7 +14,7 @@ pip install selenium
 cd test-automation-training
 ```
 
-Run the unit tests:
+# Run the unit tests:
 
 - Run all the unit tests:
 ```
@@ -30,7 +30,7 @@ For example:
 python3 -m unittest test/TestLandingPage.py --verbose
 ```
   
-Run the features:
+# Run the features:
 
 - Run test on all features:
 ```
