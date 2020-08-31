@@ -1,12 +1,21 @@
 from res.pages.LoginModal import LoginModal
 from res.testdata import TestData
-from res.locators import Locators
+from selenium.webdriver.common.by import By
 
 
 class PricingPage(LoginModal):
+
+    INDIVIDUAL_SMALL_BUSINESS_BTN = (
+        By.CSS_SELECTOR,
+        "div.App div.gi-Landing.gi-Landing--Pricing:nth-child(2) div.gi-coverPricing div.container-fluid "
+        "div.gi-coverPricing-Tab > button.gi-coverPricing-Tab-Item.is-active.test-invididuals-tab:nth-child(1)")
+    SUBSCRIPTION_BTN = (By.CSS_SELECTOR,
+                        "div.App div.gi-Landing.gi-Landing--Pricing:nth-child(2) div.gi-coverPricing "
+                        "div.container-fluid div.gi-coverPricing-Inner.gi-coverPricing-Inner--Individuals div.row "
+                        "div.col-12.col-md-4:nth-child(3) div.gi-pricingItem div.gi-pricingItem-Button > button.btn")
+
     def __init__(self, driver):
         super().__init__(driver)
         super().login(TestData.LOGIN_SUCCESS_ACCOUNT["USERNAME"], TestData.LOGIN_SUCCESS_ACCOUNT["PASSWORD"])
         self.driver.get(TestData.BASE_URL + "/pricing")
-        super().click(Locators.PRICING_BTN)
-
+        super().click(self.PRICING_BTN)

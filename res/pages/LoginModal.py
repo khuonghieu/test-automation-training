@@ -1,16 +1,34 @@
 from res.pages.BasePage import BasePage
-from res.locators import Locators
 from res.testdata import TestData
+from selenium.webdriver.common.by import By
 
 
 class LoginModal(BasePage):
+    LOGIN_MODAL = (By.CSS_SELECTOR, "body.modal-open:nth-child(2) div.fade.in.modal:nth-child(2) div.modal-dialog "
+                                    "div.modal-content div.modal-body > div.gi-AccountModal")
+
+    EMAIL_INPUT = (By.CSS_SELECTOR, "body.modal-open:nth-child(2) div.fade.in.modal:nth-child(2) div.modal-dialog "
+                                    "div.modal-content div.modal-body div.gi-AccountModal div.gi-FormGroup:nth-child("
+                                    "3) > input.gi-Input:nth-child(2)")
+    PASSWORD_INPUT = (By.CSS_SELECTOR, "body.modal-open:nth-child(2) div.fade.in.modal:nth-child(2) div.modal-dialog "
+                                       "div.modal-content div.modal-body div.gi-AccountModal "
+                                       "div.gi-FormGroup:nth-child(4) > input.gi-Input:nth-child(2)")
+    LOGIN_CONFIRM_BTN = (By.ID, "login-button")
+    LOGIN_ERROR_MESSAGE = (
+        By.CSS_SELECTOR, "body.modal-open:nth-child(2) div.fade.in.modal:nth-child(2) div.modal-dialog "
+                         "div.modal-content div.modal-body div.gi-AccountModal > "
+                         "div.alert.alert-danger:nth-child(1)")
+    LOGIN_MODAL_BTN = (By.ID, "test-login-button")
+    NAVBAR_ACCOUNT = (By.CSS_SELECTOR, "div.App div.gi-Landing:nth-child(2) div.gi-navBar div.container "
+                                       "div.gi-navBar-Inner div.gi-navBar-Items > div.gi-navBar-Account")
+    PRICING_BTN = (By.ID, "pricing-navlink-landing")
+
     def __init__(self, driver):
         super().__init__(driver)
-        self.driver.implicitly_wait(10)
         self.driver.get(TestData.BASE_URL)
-        self.click(Locators.LOGIN_MODAL_BTN)
+        self.click(self.LOGIN_MODAL_BTN)
 
     def login(self, username, password):
-        self.enter_text(Locators.EMAIL_INPUT, username)
-        self.enter_text(Locators.PASSWORD_INPUT, password)
-        self.click(Locators.LOGIN_CONFIRM_BTN)
+        self.enter_text(self.EMAIL_INPUT, username)
+        self.enter_text(self.PASSWORD_INPUT, password)
+        self.click(self.LOGIN_CONFIRM_BTN)

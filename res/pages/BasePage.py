@@ -39,8 +39,3 @@ class BasePage:
     def is_visible(self, by_locator):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator))
         return bool(element)
-
-    # this function moves the mouse pointer over a web element whose locator has been passed to it.
-    def hover_to(self, by_locator):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator))
-        ActionChains(self.driver).move_to_element(element).perform()
