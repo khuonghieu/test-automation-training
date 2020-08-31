@@ -30,7 +30,7 @@ def fail_transaction(context):
     assert context.purchase.is_enabled(CardPayment.PAYMENT_FAIL_MESSAGE)
 
 
-@then('User should see the session balance has been set to "unlimited"')
+@then('User should see the session balance has been set to unlimited')
 def successful_transaction(context):
     time.sleep(10)
     context.purchase.assert_element_text(CardPayment.SESSION_BALANCE, "unlimited")

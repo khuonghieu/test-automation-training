@@ -42,11 +42,8 @@ class CardPayment(PaymentModal):
 
     def __init__(self, driver):
         super().__init__(driver)
-        try:
-            super().show_all_payment_methods()
-        except TimeoutException:
-            pass
-        time.sleep(1)
+        super().show_all_payment_methods()
+        time.sleep(2)
         self.click(self.CARD_OPTION)
 
     def fill_card_component_frame(self, frame_locator, input_locator, card_number):

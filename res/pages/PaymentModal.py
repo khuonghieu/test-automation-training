@@ -36,10 +36,10 @@ class PaymentModal(PricingPage):
 
     def show_all_payment_methods(self):
         try:
-            if self.is_visible(self.CHOOSE_ANOTHER_METHOD):
+            if self.is_enabled(self.CHOOSE_ANOTHER_METHOD):
                 self.click(self.CHOOSE_ANOTHER_METHOD)
             else:
                 pass
-            time.sleep(1)
+            time.sleep(2)
         except TimeoutException:
             pass
