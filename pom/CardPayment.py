@@ -1,8 +1,6 @@
 import time
-
-from res.pages.PaymentModal import PaymentModal
+from pom import PaymentModal
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
 
 
 class CardPayment(PaymentModal):

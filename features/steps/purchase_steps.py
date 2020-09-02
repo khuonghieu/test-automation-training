@@ -1,7 +1,6 @@
 import time
-
 from behave import *
-from res.pages.CardPayment import CardPayment
+from pom import CardPayment
 from res.testdata import TestData
 
 

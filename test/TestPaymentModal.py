@@ -1,7 +1,7 @@
 from selenium import webdriver
 import unittest
 from selenium.webdriver.chrome.options import Options
-from res.pages.PaymentModal import PaymentModal
+from pom import PaymentModal
 
 
 class TestPaymentModal(unittest.TestCase):

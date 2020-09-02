@@ -1,9 +1,11 @@
-from res.pages.LoginModal import LoginModal
+from pom.LoginModal import LoginModal
 from res.testdata import TestData
 from selenium.webdriver.common.by import By
 
 
 class PricingPage(LoginModal):
+
+    _expected_url = TestData.BASE_URL + "/pricing"
 
     INDIVIDUAL_SMALL_BUSINESS_BTN = (
         By.CSS_SELECTOR,
@@ -19,3 +21,6 @@ class PricingPage(LoginModal):
         super().login(TestData.LOGIN_SUCCESS_ACCOUNT["USERNAME"], TestData.LOGIN_SUCCESS_ACCOUNT["PASSWORD"])
         self.driver.get(TestData.BASE_URL + "/pricing")
         super().click(self.PRICING_BTN)
+
+    def is_present(self):
+        return self._expect_url == self.driver.get_current_url()

@@ -1,4 +1,4 @@
-from res.pages.LoginModal import LoginModal
+from pom.LoginModal import LoginModal
 from behave import *
 from res.testdata import TestData
 

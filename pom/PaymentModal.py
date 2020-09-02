@@ -1,6 +1,5 @@
 import time
-
-from res.pages.PricingPage import PricingPage
+from pom import PricingPage
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 

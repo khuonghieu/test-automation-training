@@ -2,7 +2,7 @@ from selenium import webdriver
 import unittest
 from res.testdata import TestData
 from selenium.webdriver.chrome.options import Options
-from res.pages.CardPayment import CardPayment
+from pom import CardPayment
 
 
 class TestCardPayment(unittest.TestCase):

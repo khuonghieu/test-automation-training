@@ -1,10 +1,12 @@
 from behave import *
-from res.pages.LandingPage import LandingPage
+from pom.LandingPage import LandingPage
+
 
 
 @given('User is on Landing Page')
 def user_loads_landing_page(context):
     context.landing_page = LandingPage(context.browser)
+    assert context.landing_page.is_present()
 
 
 @when('User clicks on LogIn Modal Button')

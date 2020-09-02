@@ -1,7 +1,7 @@
 from selenium import webdriver
 import unittest
 from selenium.webdriver.chrome.options import Options
-from res.pages.LoginModal import LoginModal
+from pom.LoginModal import LoginModal
 from res.testdata import TestData
 
 

@@ -1,10 +1,11 @@
-from res.pages.PricingPage import PricingPage
+from pom import PricingPage
 from behave import *
 
 
 @given('User is already logged in and on Pricing page')
 def user_loads_pricing_page(context):
     context.pricing_page = PricingPage(context.browser)
+    assert context.pricing_page.is_present()
 
 
 @then('User should see pricing button')

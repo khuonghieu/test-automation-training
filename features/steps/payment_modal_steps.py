@@ -1,4 +1,4 @@
-from res.pages.PaymentModal import PaymentModal
+from pom import PaymentModal
 from behave import *
 
 

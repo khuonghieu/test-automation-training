@@ -2,7 +2,7 @@ import time
 from selenium import webdriver
 import unittest
 from selenium.webdriver.chrome.options import Options
-from res.pages.CardPayment import CardPayment
+from pom import CardPayment
 from res.testdata import TestData
 
 

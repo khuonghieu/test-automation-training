@@ -1,7 +1,7 @@
 from selenium import webdriver
 import unittest
 from selenium.webdriver.chrome.options import Options
-from res.pages.PricingPage import PricingPage
+from pom import PricingPage
 
 
 class TestPricingPage(unittest.TestCase):

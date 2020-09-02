@@ -1,4 +1,4 @@
-from res.pages.CardPayment import CardPayment
+from pom import CardPayment
 from behave import *
 from res.testdata import TestData
 
