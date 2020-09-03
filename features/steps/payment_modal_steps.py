@@ -1,4 +1,4 @@
-from pom import PaymentModal
+from pom.payment_modal import PaymentModal
 from behave import *
 
 

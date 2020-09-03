@@ -1,5 +1,5 @@
 from behave import *
-from pom.LandingPage import LandingPage
+from pom.landing_page import LandingPage
 
 
 

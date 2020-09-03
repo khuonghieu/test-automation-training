@@ -1,4 +1,4 @@
-from pom import PricingPage
+from pom.pricing_page import PricingPage
 from behave import *
 
 

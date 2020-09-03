@@ -1,4 +1,4 @@
-from pom import BasePage
+from pom.base_page import BasePage
 from res.testdata import TestData
 from selenium.webdriver.common.by import By
 
@@ -25,7 +25,7 @@ class LoginModal(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.driver.get(TestData.BASE_URL)
+        self.driver.get_url(TestData.BASE_URL)
         self.click(self.LOGIN_MODAL_BTN)
 
     def fill_username(self, username):

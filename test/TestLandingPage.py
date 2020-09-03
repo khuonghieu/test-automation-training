@@ -1,6 +1,6 @@
 from selenium import webdriver
 import unittest
-from pom.LandingPage import LandingPage
+from pom.landing_page import LandingPage
 
 
 class TestLandingPage(unittest.TestCase):

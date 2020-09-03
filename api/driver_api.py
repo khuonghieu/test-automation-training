@@ -8,10 +8,13 @@ class DriverAPI:
 
     # this function is called every time a new object of the base class is created.
     def __init__(self, driver):
-        self.driver = driver
+        self.wrapped_driver = driver
+
+    def get_url(self, url):
+        self.wrapped_driver.get(url)
 
     def find_element(self, by_locator):
-        return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator))
+        return WebDriverWait(self.wrapped_driver, 10).until(EC.visibility_of_element_located(by_locator))
 
     # this function performs click on web element whose locator is passed to it.
     def click(self, by_locator):
@@ -20,7 +23,10 @@ class DriverAPI:
     # this function switch to an iframe
     def switch_to_frame(self, by_locator):
         frame = self.find_element(by_locator)
-        self.driver.switch_to.frame(frame)
+        self.wrapped_driver.switch_to.frame(frame)
+
+    def switch_to_default(self):
+        self.wrapped_driver.switch_to.default_content()
 
     # this function asserts comparison of a web element's text with passed in text.
     def assert_element_text(self, by_locator, element_text):
@@ -43,4 +49,4 @@ class DriverAPI:
         return bool(element)
 
     def get_current_url(self):
-        return self.driver.current_url
+        return self.wrapped_driver.current_url

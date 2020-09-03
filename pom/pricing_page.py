@@ -1,4 +1,4 @@
-from pom.LoginModal import LoginModal
+from pom.login_modal import LoginModal
 from res.testdata import TestData
 from selenium.webdriver.common.by import By
 
@@ -19,8 +19,8 @@ class PricingPage(LoginModal):
     def __init__(self, driver):
         super().__init__(driver)
         super().login(TestData.LOGIN_SUCCESS_ACCOUNT["USERNAME"], TestData.LOGIN_SUCCESS_ACCOUNT["PASSWORD"])
-        self.driver.get(TestData.BASE_URL + "/pricing")
+        self.driver.get_url(TestData.BASE_URL + "/pricing")
         super().click(self.PRICING_BTN)
 
     def is_present(self):
-        return self._expect_url == self.driver.get_current_url()
+        return self._expect_url in self.driver.get_current_url()

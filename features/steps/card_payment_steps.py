@@ -1,4 +1,6 @@
-from pom import CardPayment
+import random
+
+from pom.card_payment import CardPayment
 from behave import *
 from res.testdata import TestData
 

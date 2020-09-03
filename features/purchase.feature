@@ -12,4 +12,4 @@ Feature: Card transaction
     Given User is on the Card Form
     When User fills in a valid card
     And User clicks Pay Now
-    Then User should see the session balance has been set to unlimited
+    Then User should see Transaction Success Modal
