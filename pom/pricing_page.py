@@ -1,26 +1,28 @@
-from pom.login_modal import LoginModal
+from pom.base_page import BasePage
 from res.testdata import TestData
 from selenium.webdriver.common.by import By
+from pom.login_modal import LoginModal
 
 
-class PricingPage(LoginModal):
-
+class PricingPage(BasePage):
     _expected_url = TestData.BASE_URL + "/pricing"
 
-    INDIVIDUAL_SMALL_BUSINESS_BTN = (
-        By.CSS_SELECTOR,
-        "div.App div.gi-Landing.gi-Landing--Pricing:nth-child(2) div.gi-coverPricing div.container-fluid "
-        "div.gi-coverPricing-Tab > button.gi-coverPricing-Tab-Item.is-active.test-invididuals-tab:nth-child(1)")
-    SUBSCRIPTION_BTN = (By.CSS_SELECTOR,
-                        "div.App div.gi-Landing.gi-Landing--Pricing:nth-child(2) div.gi-coverPricing "
-                        "div.container-fluid div.gi-coverPricing-Inner.gi-coverPricing-Inner--Individuals div.row "
-                        "div.col-12.col-md-4:nth-child(3) div.gi-pricingItem div.gi-pricingItem-Button > button.btn")
+    INDIVIDUAL_SMALL_BUSINESS_BTN = (By.CSS_SELECTOR, ".gi-coverPricing-Tab-Item.is-active.test-invididuals-tab")
+    SUBSCRIPTION_BTN = (By.XPATH, "//button[contains(text(),'TRY FOR FREE')]")
+    PRICING_BTN = (By.CSS_SELECTOR, "#pricing-navlink-landing")
 
     def __init__(self, driver):
         super().__init__(driver)
-        super().login(TestData.LOGIN_SUCCESS_ACCOUNT["USERNAME"], TestData.LOGIN_SUCCESS_ACCOUNT["PASSWORD"])
-        self.driver.get_url(TestData.BASE_URL + "/pricing")
-        super().click(self.PRICING_BTN)
+        self.driver.get_url(TestData.BASE_URL)
 
     def is_present(self):
         return self._expect_url in self.driver.get_current_url()
+
+    def login(self, username, password):
+        self.click(LoginModal.LOGIN_MODAL_BTN)
+        self.enter_text(LoginModal.EMAIL_INPUT, username)
+        self.enter_text(LoginModal.PASSWORD_INPUT, password)
+        self.click(LoginModal.LOGIN_CONFIRM_BTN)
+
+    def go_to_pricing_page(self):
+        self.driver.get_url(TestData.BASE_URL + 'pricing')

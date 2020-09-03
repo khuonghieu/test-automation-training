@@ -1,42 +1,56 @@
 import time
-from pom.payment_modal import PaymentModal
+
+from selenium.common.exceptions import TimeoutException
+
+from pom.base_page import BasePage
 from selenium.webdriver.common.by import By
+from pom.login_modal import LoginModal
+from pom.payment_modal import PaymentModal
+from pom.pricing_page import PricingPage
+from res.testdata import TestData
 
 
-class CardPayment(PaymentModal):
-
-    CARD_FORM = (By.CSS_SELECTOR, "body.modal-open:nth-child(2) div.fade.in.modal:nth-child(2) div.modal-dialog "
-                                  "div.modal-content div.modal-body div.braintree-show-card "
-                                  "div.braintree-dropin.braintree-loaded:nth-child(2) "
-                                  "div.braintree-upper-container:nth-child(5) "
-                                  "div.braintree-sheet__container.braintree-sheet--active > "
-                                  "div.braintree-card.braintree-form.braintree-sheet")
-    CARD_NUM_FRAME = (By.ID, "braintree-hosted-field-number")
-    EXP_DATE_FRAME = (By.ID, "braintree-hosted-field-expirationDate")
-    CVV_FRAME = (By.ID, "braintree-hosted-field-cvv")
-    POSTAL_FRAME = (By.ID, "braintree-hosted-field-postalCode")
-    CARD_NUMBER_INPUT = (By.ID, "credit-card-number")
-    CARD_DATE_INPUT = (By.ID, "expiration")
-    CARD_CVV_INPUT = (By.ID, "cvv")
-    CARD_POSTAL_INPUT = (By.ID, "postal-code")
+class CardPayment(BasePage):
+    CARD_FORM = (By.CSS_SELECTOR, ".braintree-sheet__content.braintree-sheet__content--form")
+    CARD_NUM_FRAME = (By.CSS_SELECTOR, "#braintree-hosted-field-number")
+    EXP_DATE_FRAME = (By.CSS_SELECTOR, "#braintree-hosted-field-expirationDate")
+    CVV_FRAME = (By.CSS_SELECTOR, "#braintree-hosted-field-cvv")
+    POSTAL_FRAME = (By.CSS_SELECTOR, "#braintree-hosted-field-postalCode")
+    CARD_NUMBER_INPUT = (By.CSS_SELECTOR, "#credit-card-number")
+    CARD_DATE_INPUT = (By.CSS_SELECTOR, "#expiration")
+    CARD_CVV_INPUT = (By.CSS_SELECTOR, "#cvv")
+    CARD_POSTAL_INPUT = (By.CSS_SELECTOR, "#postal-code")
     CARD_ERROR_MESSAGE_LIST = (By.CLASS_NAME, "braintree-form__field-error")
-    PAY_BTN = (By.CSS_SELECTOR, "body.modal-open:nth-child(2) div.fade.in.modal:nth-child(2) div.modal-dialog "
-                                "div.modal-content div.modal-footer div.u-flex.u-flexGrow-1.u-flexColumn > "
-                                "button.gi-Button.gi-Button--primary.u-width-100")
+    PAY_BTN = (By.CSS_SELECTOR, ".u-flex>.gi-Button.gi-Button--primary.u-width-100")
     TRANSACTION_SUCCESS_MODAL = (By.XPATH, "//div[@class='modal-content']")
-    PAYMENT_FAIL_MESSAGE = (By.CSS_SELECTOR, "body.modal-open:nth-child(2) div.fade.in.modal:nth-child(2) "
-                                             "div.modal-dialog div.modal-content div.modal-body "
-                                             "div.braintree-show-card "
-                                             "div.braintree-dropin.braintree-loaded.braintree-sheet--has-error:nth"
-                                             "-child(2) div.braintree-upper-container:nth-child(5) "
-                                             "div.braintree-sheet__container.braintree-sheet--active "
-                                             "div.braintree-sheet__error > div.braintree-sheet__error-text")
+    PAYMENT_FAIL_MESSAGE = (By.CSS_SELECTOR, ".braintree-sheet__error-text")
 
     def __init__(self, driver):
         super().__init__(driver)
-        super().show_all_payment_methods()
-        time.sleep(1)
-        self.click(self.CARD_OPTION)
+        self.driver.get_url(TestData.BASE_URL)
+
+    def login(self, username, password):
+        self.click(LoginModal.LOGIN_MODAL_BTN)
+        self.enter_text(LoginModal.EMAIL_INPUT, username)
+        self.enter_text(LoginModal.PASSWORD_INPUT, password)
+        self.click(LoginModal.LOGIN_CONFIRM_BTN)
+
+    def choose_subscription_option(self):
+        self.driver.get_url(TestData.BASE_URL + 'pricing')
+        self.driver.click(PricingPage.SUBSCRIPTION_BTN)
+
+    def show_all_payment_methods(self):
+        try:
+            if self.is_visible(PaymentModal.CHOOSE_ANOTHER_METHOD):
+                self.click(PaymentModal.CHOOSE_ANOTHER_METHOD)
+                time.sleep(1)
+            else:
+                pass
+        except TimeoutException:
+            pass
+
+    def choose_card_option(self):
+        self.click(PaymentModal.CARD_OPTION)
 
     def fill_card_component_frame(self, frame_locator, input_locator, card_number):
         self.switch_to_frame(frame_locator)

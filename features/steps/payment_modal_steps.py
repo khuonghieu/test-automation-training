@@ -1,10 +1,14 @@
 from pom.payment_modal import PaymentModal
 from behave import *
+from res.testdata import TestData
 
 
-@given('User is already logged in and clicks on Subscription Button to open payment modal')
+@given('User is logged in and clicks on Subscription Button')
 def user_opens_payment_modal(context):
     context.payment_modal = PaymentModal(context.browser)
+    context.payment_modal.login(TestData.LOGIN_SUCCESS_ACCOUNT["USERNAME"],
+                                TestData.LOGIN_SUCCESS_ACCOUNT["PASSWORD"])
+    context.payment_modal.choose_subscription_option()
 
 
 @then('User should see payment modal')

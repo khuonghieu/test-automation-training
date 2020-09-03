@@ -4,9 +4,22 @@ from pom.card_payment import CardPayment
 from res.testdata import TestData
 
 
-@given('User is on the Card Form')
+@given('User is logged in')
 def step_impl(context):
     context.purchase = CardPayment(context.browser)
+    context.purchase.login(TestData.LOGIN_SUCCESS_ACCOUNT["USERNAME"],
+                           TestData.LOGIN_SUCCESS_ACCOUNT["PASSWORD"])
+
+
+@given('User chose subscription option')
+def step_impl(context):
+    context.purchase.choose_subscription_option()
+
+
+@given('User is on Card Form')
+def step_impl(context):
+    context.purchase.show_all_payment_methods()
+    context.purchase.choose_card_option()
 
 
 @when('User fills in an invalid card')

@@ -1,13 +1,22 @@
-import random
-
 from pom.card_payment import CardPayment
 from behave import *
+from pom.payment_modal import PaymentModal
+from pom.pricing_page import PricingPage
 from res.testdata import TestData
 
 
-@given('User clicks on Card Option to open Card Form')
-def user_chooses_card_option(context):
+@given('User is logged in and chooses subscription option')
+def step_impl(context):
     context.card_payment = CardPayment(context.browser)
+    context.card_payment.login(TestData.LOGIN_SUCCESS_ACCOUNT["USERNAME"],
+                               TestData.LOGIN_SUCCESS_ACCOUNT["PASSWORD"])
+    context.card_payment.choose_subscription_option()
+
+
+@given('User chooses card payment option')
+def step_impl(context):
+    context.card_payment.show_all_payment_methods()
+    context.card_payment.choose_card_option()
 
 
 @then('User should see Card Form')
