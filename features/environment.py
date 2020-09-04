@@ -17,10 +17,10 @@ def before_tag(context, tag):
         use_fixture(browser_chrome, context)
 
 
-# def after_tag(context, tag):
-#     if tag == 'terminate_subscription':
-#         context.admin_user_profile = AdminUserProfile(context.browser)
-#         context.admin_user_profile.terminate_subscription()
+def after_tag(context, tag):
+    if tag == 'terminate_subscription':
+        context.admin_user_profile = AdminUserProfile(context.browser)
+        context.admin_user_profile.terminate_subscription()
 
 
 def after_step(context, step):

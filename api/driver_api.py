@@ -13,6 +13,9 @@ class DriverAPI:
     def get_url(self, url):
         self.wrapped_driver.get(url)
 
+    def execute_script(self, script):
+        self.wrapped_driver.execute_script(script)
+
     def find_element(self, by_locator):
         return WebDriverWait(self.wrapped_driver, 10).until(EC.visibility_of_element_located(by_locator))
 
