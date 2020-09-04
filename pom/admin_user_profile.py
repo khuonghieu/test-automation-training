@@ -9,6 +9,7 @@ class AdminUserProfile(BasePage):
 
     GOOGLE_AUTH_BTN = (By.CSS_SELECTOR, ".btn.btn-lg.btn-social.btn-google")
     TERMINATE_SUBSCRIPTION_BTN = (By.CSS_SELECTOR, "#terminateSubscriptionButton")
+    TERMINATE_CONFIRM_BTN = (By.CSS_SELECTOR, ".btn.btn-primary")
     STORAGE_KEY = '"accesstoken"'
     STORAGE_VALUE = 'JSON.stringify({"access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEwOCwiYXVkIjoiYWRtaW4iLCJpYXQiOjE1OTkyMDk1MzMsImV4cCI6MTYzMDc0NTUzMywibm9uY2UiOiJmMzdlOTdkYSJ9.K3F6c8ATs2A204Zgoc0w5ZJcjEt63dJjT1qYwzWWIc8","account_id":108,"account_name":"Hugh Khuong","account_type":"admin","auth_type":"google"})'
 
@@ -16,9 +17,13 @@ class AdminUserProfile(BasePage):
         super().__init__(driver)
         self.driver.get_url("https://admin.got-it.io/")
         self.driver.execute_script("window.localStorage.setItem("+self.STORAGE_KEY+","+self.STORAGE_VALUE+")")
+        time.sleep(2)
         self.driver.get_url("https://admin.got-it.io/user/students/17536")
 
     def terminate_subscription(self):
         if self.is_enabled(self.TERMINATE_SUBSCRIPTION_BTN):
             self.click(self.TERMINATE_SUBSCRIPTION_BTN)
+            self.click(self.TERMINATE_CONFIRM_BTN)
             time.sleep(2)
+        else:
+            pass
