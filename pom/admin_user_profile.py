@@ -21,3 +21,4 @@ class AdminUserProfile(BasePage):
     def terminate_subscription(self):
         if self.is_enabled(self.TERMINATE_SUBSCRIPTION_BTN):
             self.click(self.TERMINATE_SUBSCRIPTION_BTN)
+            time.sleep(2)

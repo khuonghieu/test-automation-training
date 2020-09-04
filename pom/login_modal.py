@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 
 class LoginModal(BasePage):
 
-    LOGIN_MODAL = (By.CSS_SELECTOR, "#modal-login")
     EMAIL_INPUT = (By.CSS_SELECTOR, '.gi-FormGroup input[name="email"]')
     PASSWORD_INPUT = (By.CSS_SELECTOR, '.gi-FormGroup input[name="password"]')
     LOGIN_CONFIRM_BTN = (By.CSS_SELECTOR, "#login-button")
@@ -14,7 +13,6 @@ class LoginModal(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.click(self.LOGIN_MODAL_BTN)
 
     def fill_username(self, username):
         self.enter_text(self.EMAIL_INPUT, username)

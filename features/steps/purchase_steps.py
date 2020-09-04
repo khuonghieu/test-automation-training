@@ -19,6 +19,7 @@ def step_impl(context):
 
 @given('User logs in')
 def step_impl(context):
+    context.landing_page.open_login_modal()
     context.login_modal = LoginModal(context.browser)
     context.login_modal.login(TestData.LOGIN_SUCCESS_ACCOUNT['USERNAME'], TestData.LOGIN_SUCCESS_ACCOUNT['PASSWORD'])
 

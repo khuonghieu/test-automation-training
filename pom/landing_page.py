@@ -15,3 +15,6 @@ class LandingPage(BasePage):
 
     def is_present(self):
         return self._expect_url in self.driver.get_current_url()
+
+    def open_login_modal(self):
+        self.click(self.LOGIN_MODAL_BTN)
