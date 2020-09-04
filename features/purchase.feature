@@ -74,7 +74,7 @@ Feature: Card transaction
     Then User should see card info error message
 
   @browser.chrome
-  Scenario: User uses a valid card to pay
+  Scenario: User uses valid card to pay
     Given User is on landing page
     And User logs in
     And User goes to pricing page
