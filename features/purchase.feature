@@ -74,6 +74,7 @@ Feature: Card transaction
     Then User should see card info error message
 
   @browser.chrome
+  @terminate_subscription
   Scenario: User uses valid card to pay
     Given User is on landing page
     And User logs in
