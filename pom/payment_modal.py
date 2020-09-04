@@ -1,9 +1,9 @@
 import time
-from pom.base_page import BasePage
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
-from pom.login_modal import LoginModal
-from pom.pricing_page import PricingPage
+
+from pom.base_page import BasePage
 from res.testdata import TestData
 
 
@@ -16,17 +16,6 @@ class PaymentModal(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.driver.get_url(TestData.BASE_URL)
-
-    def login(self, username, password):
-        self.click(LoginModal.LOGIN_MODAL_BTN)
-        self.enter_text(LoginModal.EMAIL_INPUT, username)
-        self.enter_text(LoginModal.PASSWORD_INPUT, password)
-        self.click(LoginModal.LOGIN_CONFIRM_BTN)
-
-    def choose_subscription_option(self):
-        self.driver.get_url(TestData.BASE_URL + 'pricing')
-        self.driver.click(PricingPage.SUBSCRIPTION_BTN)
 
     def show_all_payment_methods(self):
         try:
@@ -37,3 +26,6 @@ class PaymentModal(BasePage):
                 pass
         except TimeoutException:
             pass
+
+    def choose_card_option(self):
+        self.click(self.CARD_OPTION)

@@ -1,7 +1,7 @@
 import json
 
 class TestData:
-    BASE_URL = "https://www.got-it.io/solutions/excel-chat/"
+    BASE_URL = "https://www.got-it.io/solutions/excel-chat"
     SUCCESSFUL_TRANSACTION_CARD = {
         "NUMBER": "4009348888881881",
         "DATE": "0522",
